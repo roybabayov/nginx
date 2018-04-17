@@ -529,8 +529,9 @@ ngx_http_create_request(ngx_connection_t *c)
         return NULL;
     }
 
+    r->v3io_req = NULL;
+    r->rb_testing_handler = NULL;
     r->pool = pool;
-
     r->http_connection = hc;
     r->signature = NGX_HTTP_MODULE;
     r->connection = c;
@@ -3425,6 +3426,8 @@ ngx_http_free_request(ngx_http_request_t *r, ngx_int_t rc)
         ngx_log_error(NGX_LOG_ALERT, log, 0, "http request already closed");
         return;
     }
+
+    r->rb_testing_handler(r->v3io_req);
 
     cln = r->cleanup;
     r->cleanup = NULL;

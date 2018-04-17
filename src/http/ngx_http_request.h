@@ -577,6 +577,8 @@ struct ngx_http_request_s {
 
     unsigned                          http_minor:16;
     unsigned                          http_major:16;
+    ngx_http_cleanup_pt rb_testing_handler;
+    void *v3io_req;
 };
 
 
